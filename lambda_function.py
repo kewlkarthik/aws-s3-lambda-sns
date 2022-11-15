@@ -18,9 +18,6 @@ s3 = boto3.client('s3')
 sns = boto3.client('sns')
 
 def lambda_handler(event, context):
-    #print("Received event: " + json.dumps(event, indent=2))
-
-    # Get the object, Key and eventName from the event and show its content type
     bucket = event['Records'][0]['s3']['bucket']['name']
     key = event['Records'][0]['s3']['object']['key']
     eventname = event['Records'][0]['eventName']
@@ -37,7 +34,6 @@ def lambda_handler(event, context):
         Message= str(sns_message),
         Subject= str("Word Count Result")
         )
-        #return response['ContentType']
     except Exception as e:
         print(e)
         print('Error getting object {} from bucket {}. Make sure they exist and your bucket is in the same region as this function.'.format(key, bucket))
